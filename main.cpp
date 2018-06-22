@@ -95,9 +95,6 @@ vertex_3 bezier(const double u, const double v, vector<vector<vector<float> > > 
 	cpp_dec_float_100 u_long = u;
 	cpp_dec_float_100 v_long = v;
 
-	cpp_dec_float_100 one_minus_u_long = 1 - u;
-	cpp_dec_float_100 one_minus_v_long = 1 - v;
-
 	const size_t Ni = num_wide - 1;
 	const size_t Nj = num_tall - 1;
 
@@ -105,14 +102,8 @@ vertex_3 bezier(const double u, const double v, vector<vector<vector<float> > > 
 	{
 		for (size_t j = 0; j <= Nj; j++)
 		{
-			cpp_dec_float_100 i_long = i;
-			cpp_dec_float_100 j_long = j;
-
-			cpp_dec_float_100 Ni_minus_i_long = Ni - i;
-			cpp_dec_float_100 Nj_minus_j_long = Ni - j;
-
-			cpp_dec_float_100 binpow_u = binomial(Ni, i) * cached_pow(u_long, i_long) * cached_pow(one_minus_u_long, Ni_minus_i_long);
-			cpp_dec_float_100 binpow_v = binomial(Nj, j) * cached_pow(v_long, j_long) * cached_pow(one_minus_v_long, Nj_minus_j_long);
+			cpp_dec_float_100 binpow_u = binomial(Ni, i) * cached_pow(u_long, cpp_dec_float_100(i)) * cached_pow(cpp_dec_float_100(1 - u_long), cpp_dec_float_100(Ni - i));
+			cpp_dec_float_100 binpow_v = binomial(Nj, j) * cached_pow(v_long, cpp_dec_float_100(j)) * cached_pow(cpp_dec_float_100(1 - v_long), cpp_dec_float_100(Nj - j));
 
 			ret_x += binpow_u * binpow_v * control_points[i][j][0];
 			ret_y += binpow_u * binpow_v * control_points[i][j][1];
@@ -188,4 +179,6 @@ int main(void)
 	}
 
 	imwrite("out.png", out_frame);
+
+	return 0;
 }
