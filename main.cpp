@@ -24,23 +24,38 @@ double mp_to_double(cpp_dec_float_100 &b)
 	return ret;
 }
 
-map<cpp_dec_float_100, cpp_dec_float_100> fact_cache;
+long long unsigned mp_to_int(cpp_dec_float_100 &b)
+{
+	ostringstream oss;
+	oss << b;
+
+	long long unsigned ret;
+	istringstream iss(oss.str());
+	iss >> ret;
+
+	return ret;
+}
+
+vector<cpp_dec_float_100> fact_lut;
+
+void init_fact_lut(long long unsigned int n_max)
+{
+	fact_lut.resize(n_max + 1);
+
+	for (long long unsigned int i = 0; i <= n_max; i++)
+	{
+		cpp_dec_float_100 ret = 1;
+
+		for (cpp_dec_float_100 k = i; k > 0; k--)
+			ret *= k;
+
+		fact_lut[i] = ret;
+	}
+}
 
 cpp_dec_float_100 fact(cpp_dec_float_100 n)
 {
-	map<cpp_dec_float_100, cpp_dec_float_100>::const_iterator ci = fact_cache.find(n);
-
-	if (ci != fact_cache.end())
-		return ci->second;
-
-	cpp_dec_float_100 ret = 1;
-
-	for (cpp_dec_float_100 k = n; k > 0; k--)
-		ret *= k;
-
-	fact_cache[n] = ret;
-
-	return ret;
+	return fact_lut[mp_to_int(n)];
 }
 
 map<pair<cpp_dec_float_100, cpp_dec_float_100>, cpp_dec_float_100> binomial_cache;
@@ -158,8 +173,21 @@ int main(void)
 		}
 	}
 
-	int out_num_wide = 64;// num_wide * 2;
-	int out_num_tall = 64;// num_tall * 2;
+	int out_num_wide = 16;// num_wide * 2;
+	int out_num_tall = 12;// num_tall * 2;
+
+	vector<int> nums;
+
+	nums.push_back(out_num_wide);
+	nums.push_back(out_num_tall);
+	nums.push_back(num_wide);
+	nums.push_back(num_tall);
+
+	sort(nums.begin(), nums.end());
+
+	int largest = nums[nums.size() - 1];
+
+	init_fact_lut(largest);
 
 	Mat out_frame(out_num_tall, out_num_wide, CV_8UC1);
 
