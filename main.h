@@ -33,11 +33,6 @@ void init_fact_lut(long long unsigned int n_max)
 	}
 }
 
-inline cpp_dec_float_100 fact(long long unsigned int n)
-{
-	return fact_lut[n];
-}
-
 map<pair<long long unsigned int, long long unsigned int>, cpp_dec_float_100> binomial_cache;
 
 cpp_dec_float_100 binomial(long long unsigned int n, long long unsigned int k)
@@ -53,7 +48,7 @@ cpp_dec_float_100 binomial(long long unsigned int n, long long unsigned int k)
 	// -----------
 	// k! (n - k)!
 
-	cpp_dec_float_100 ret = fact(n) / (fact(k)*fact(n - k));
+	cpp_dec_float_100 ret = fact_lut[n] / (fact_lut[k]*fact_lut[n - k]);
 
 	binomial_cache[p] = ret;
 

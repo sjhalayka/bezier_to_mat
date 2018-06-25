@@ -51,8 +51,8 @@ int main(void)
 		}
 	}
 
-	int out_num_wide = 16;// num_wide * 2;
-	int out_num_tall = 12;// num_tall * 2;
+	int out_num_wide = 64;// num_wide * 2;
+	int out_num_tall = 48;// num_tall * 2;
 
 	vector<int> nums;
 
