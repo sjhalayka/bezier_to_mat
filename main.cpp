@@ -53,18 +53,18 @@ void init_fact_lut(long long unsigned int n_max)
 	}
 }
 
-cpp_dec_float_100 fact(cpp_dec_float_100 n)
+cpp_dec_float_100 fact(long long unsigned int n)
 {
-	return fact_lut[mp_to_int(n)];
+	return fact_lut[n];
 }
 
-map<pair<cpp_dec_float_100, cpp_dec_float_100>, cpp_dec_float_100> binomial_cache;
+map<pair<long long unsigned int, long long unsigned int>, cpp_dec_float_100> binomial_cache;
 
-cpp_dec_float_100 binomial(cpp_dec_float_100 n, cpp_dec_float_100 k)
+cpp_dec_float_100 binomial(long long unsigned int n, long long unsigned int k)
 {
-	pair<cpp_dec_float_100, cpp_dec_float_100> p(n, k);
+	pair<long long unsigned int, long long unsigned int> p(n, k);
 
-	map<pair<cpp_dec_float_100, cpp_dec_float_100>, cpp_dec_float_100>::const_iterator ci = binomial_cache.find(p);
+	map<pair<long long unsigned int, long long unsigned int>, cpp_dec_float_100>::const_iterator ci = binomial_cache.find(p);
 
 	if (ci != binomial_cache.end())
 		return ci->second;
