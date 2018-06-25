@@ -12,6 +12,7 @@ using namespace cv;
 
 #include "primitives.h"
 
+
 double mp_to_double(cpp_dec_float_100 &b)
 {
 	ostringstream oss;
@@ -24,17 +25,6 @@ double mp_to_double(cpp_dec_float_100 &b)
 	return ret;
 }
 
-long long unsigned mp_to_int(cpp_dec_float_100 &b)
-{
-	ostringstream oss;
-	oss << b;
-
-	long long unsigned ret;
-	istringstream iss(oss.str());
-	iss >> ret;
-
-	return ret;
-}
 
 vector<cpp_dec_float_100> fact_lut;
 
